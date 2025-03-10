@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MoviesViewController: UIViewController,UITableViewDelegate, UITableViewDataSource{
+class MoviesViewController: UIViewController {
 
     
     var movieRepository: MovieRepository!
@@ -36,7 +36,7 @@ class MoviesViewController: UIViewController,UITableViewDelegate, UITableViewDat
         
         DispatchQueue.global(qos: .background).async {
             
-            self.movies = self.movieRepository.getMovies()
+            self.receiveMovies()
             
             DispatchQueue.main.async {
                 self.loadedMovies()
@@ -44,17 +44,37 @@ class MoviesViewController: UIViewController,UITableViewDelegate, UITableViewDat
         }
     }
     
-    func loadingMovies(){
-        movies.removeAll()
-        moviesTableView.reloadData()
-        titleLabel.text = "loading ..."
+    func receiveMovies() {
+        self.movies = self.movieRepository.getMovies()
     }
     
-    func loadedMovies(){
+    func loadingMovies() {
+        removeMovies()
+        updateTable()
+        updateCount(texto: "loading ...")
+    }
+    
+    func loadedMovies() {
         moviesTableView.reloadData()
-        titleLabel.text = "Movies: " + String(movies.count)
+        updateCount(texto: "Movies: " + String(movies.count))
+    }
+    
+    func updateCount(texto: String) {
+        titleLabel.text = texto
+    }
+    
+    func removeMovies() {
+        movies.removeAll()
+    }
+    
+    func updateTable() {
+        moviesTableView.reloadData()
     }
 
+}
+
+
+extension MoviesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
@@ -64,25 +84,8 @@ class MoviesViewController: UIViewController,UITableViewDelegate, UITableViewDat
         let cell = moviesTableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)as! MovieTableViewCell
         
         let movie:Movie = movies[indexPath.item]
-        cell.movieTitleLabel.text = movie.title;
-        cell.movieImageView.load(url: URL(string: movie.image!)!)
-        
+        cell.configure(movie: movie)
         
         return cell
-    }
-    
-
-}
-extension UIImageView {
-    func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
-                }
-            }
-        }
     }
 }
