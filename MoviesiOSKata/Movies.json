@@ -1,31 +1,45 @@
 [
   {
+    "id": 1,
     "image": "https://pics.filmaffinity.com/inferno-993771440-large.jpg",
-    "title": "Inferno"
+    "title": "Inferno",
+    "overview": "resumen de la pelicula inferno, no me la vi"
   },
   {
+    "id": 2,
     "image": "https://pics.filmaffinity.com/jack_reacher-556972936-large.jpg",
-    "title": "Jack Reacher: Never Go Back"
+    "title": "Jack Reacher: Never Go Back",
+    "overview": "resumen de la pelicula Jack Reacher: Never Go Back, no me la vi"
   },
   {
+    "id": 3,
     "image": "https://pics.filmaffinity.com/star_trek_beyond-843537458-large.jpg",
-    "title": "Star Trek Beyond"
+    "title": "Star Trek Beyond",
+    "overview": "resumen de la pelicula Star Trek Beyond, no me la vi"
   },
   {
+    "id": 4,
     "image": "https://pics.filmaffinity.com/doctor_strange-883697036-large.jpg",
-    "title": "Doctor Strange"
+    "title": "Doctor Strange",
+    "overview": "resumen de la pelicula Doctor Strange, si me la vi mu buena"
   },
   {
+    "id": 5,
     "image": "https://pics.filmaffinity.com/the_girl_on_the_train-798601258-large.jpg",
-    "title": "The Girl on the Train"
+    "title": "The Girl on the Train",
+    "overview": "resumen de la pelicula The Girl on the Train, no me la vi"
   },
   {
+    "id": 6,
     "image": "https://pics.filmaffinity.com/deep_water-790981437-large.jpg",
-    "title": "Deepwater Horizon"
+    "title": "Deepwater Horizon",
+    "overview": "resumen de la pelicula Deepwater Horizon, no me la vi"
   },
   {
+    "id": 7,
     "image": "https://pics.filmaffinity.com/un_monstruo_viene_a_verme_a_monster_calls-108553414-large.jpg",
-    "title": "A Monster Calls"
+    "title": "A Monster Calls",
+    "overview": "resumen de la pelicula A Monster Calls, no me la vi"
   }
  
 

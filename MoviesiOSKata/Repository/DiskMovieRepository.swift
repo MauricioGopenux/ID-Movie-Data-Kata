@@ -10,9 +10,11 @@ import Foundation
 
 class DiskMovieRepository: MovieRepository {
     
+    var movies:[Movie] = []
+    
     func getMovies() -> [Movie]{
-        var movies:[Movie] = []
-
+        movies.removeAll()
+        
         let url = Bundle.main.url(forResource: "Movies", withExtension: "json")
         let data = try? Data(contentsOf: url!)
         
@@ -22,8 +24,10 @@ class DiskMovieRepository: MovieRepository {
             if let moviesjson = json as? [[String: AnyObject]] {
                 for moviejson in moviesjson {
                     let movie: Movie = Movie();
+                    movie.id = moviejson["id"] as? Int
                     movie.title = moviejson["title"] as? String
                     movie.image = moviejson["image"] as? String
+                    movie.overview = moviejson["overview"] as? String
 
                     movies.append(movie)
                 }
@@ -35,6 +39,11 @@ class DiskMovieRepository: MovieRepository {
         simulateDelay()
         
         return movies;
+    }
+    
+    func getMovieById(movieId: Int) -> Movie? {
+        return movies.first(where: { $0.id == movieId })
+       
     }
     
     func simulateDelay() -> Void{

@@ -9,6 +9,8 @@
 import Foundation
 
 class Movie {
-    var image:String?;
-    var title:String?;
+    var id: Int!
+    var image: String?
+    var title: String?
+    var overview: String?
 }

@@ -8,84 +8,79 @@
 
 import UIKit
 
+protocol MoviePresenterProtocol: AnyObject {
+    
+    func loadMovies()
+}
+
 class MoviesViewController: UIViewController {
 
-    
-    var movieRepository: MovieRepository!
-    var movies = [Movie]()
-    
-    @IBOutlet weak var moviesTableView: UITableView!
-    
-    @IBOutlet weak var titleLabel: UILabel!
-    
-    @IBAction func refreshClicked(_ sender: UIButton) {
+    @IBOutlet private weak var moviesTableView: UITableView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBAction private func refreshClicked(_ sender: UIButton) {
         loadMovies()
     }
+    
+    private var moviePresenter: MoviePresenter!
+    
+    
+    func setMoviePresenter(moviePresenter: MoviePresenter) {
+        self.moviePresenter = moviePresenter
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         moviesTableView.tableFooterView = UIView()
-        moviesTableView.dataSource = self;
-        
+        moviesTableView.dataSource = self
+        moviesTableView.delegate  = self
+        moviePresenter.setConfigMovies(configMovies: self)
         loadMovies()
     }
     
     func loadMovies() {
-        loadingMovies()
-        
-        DispatchQueue.global(qos: .background).async {
-            
-            self.receiveMovies()
-            
-            DispatchQueue.main.async {
-                self.loadedMovies()
-            }
-        }
+        moviePresenter.loadMovies()
     }
+
+}
+
+extension MoviesViewController: ConfMovieViewController {
     
-    func receiveMovies() {
-        self.movies = self.movieRepository.getMovies()
-    }
-    
-    func loadingMovies() {
-        removeMovies()
-        updateTable()
-        updateCount(texto: "loading ...")
-    }
-    
-    func loadedMovies() {
+    func updateTable() {
         moviesTableView.reloadData()
-        updateCount(texto: "Movies: " + String(movies.count))
+        
     }
     
     func updateCount(texto: String) {
         titleLabel.text = texto
     }
-    
-    func removeMovies() {
-        movies.removeAll()
-    }
-    
-    func updateTable() {
-        moviesTableView.reloadData()
-    }
-
 }
-
 
 extension MoviesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        return moviePresenter.movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = moviesTableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)as! MovieTableViewCell
         
-        let movie:Movie = movies[indexPath.item]
+        let movie: Movie = moviePresenter.movies[indexPath.item]
         cell.configure(movie: movie)
         
         return cell
     }
 }
+
+extension MoviesViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        moviePresenter.showOverview(movieId: indexPath.row, referenceVC: self)
+          
+      }
+}
+
+
+

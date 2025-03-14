@@ -20,6 +20,10 @@
 		155F0C541DCA82EF00CAA83B /* Movies.json in Resources */ = {isa = PBXBuildFile; fileRef = 155F0C531DCA82EF00CAA83B /* Movies.json */; };
 		155F0C561DCA832500CAA83B /* DiskMovieRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155F0C551DCA832500CAA83B /* DiskMovieRepository.swift */; };
 		3F2C99B82D7F0E24005ED739 /* MovieRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2C99B72D7F0E24005ED739 /* MovieRepository.swift */; };
+		3FB0A6A02D83139E00D1EB73 /* MoviePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB0A69F2D83139E00D1EB73 /* MoviePresenter.swift */; };
+		3FB0A6A32D8330C600D1EB73 /* OverviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FB0A6A22D8330C600D1EB73 /* OverviewViewController.xib */; };
+		3FB0A6A42D8330C600D1EB73 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB0A6A12D8330C600D1EB73 /* OverviewViewController.swift */; };
+		3FB0A6A62D83355D00D1EB73 /* OverviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB0A6A52D83355D00D1EB73 /* OverviewPresenter.swift */; };
 		3FEDA6622D7B880D003D2AD0 /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEDA6612D7B880D003D2AD0 /* AppDependencies.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +65,10 @@
 		155F0C531DCA82EF00CAA83B /* Movies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Movies.json; sourceTree = "<group>"; };
 		155F0C551DCA832500CAA83B /* DiskMovieRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskMovieRepository.swift; sourceTree = "<group>"; };
 		3F2C99B72D7F0E24005ED739 /* MovieRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRepository.swift; sourceTree = "<group>"; };
+		3FB0A69F2D83139E00D1EB73 /* MoviePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePresenter.swift; sourceTree = "<group>"; };
+		3FB0A6A12D8330C600D1EB73 /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
+		3FB0A6A22D8330C600D1EB73 /* OverviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverviewViewController.xib; sourceTree = "<group>"; };
+		3FB0A6A52D83355D00D1EB73 /* OverviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewPresenter.swift; sourceTree = "<group>"; };
 		3FEDA6612D7B880D003D2AD0 /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,10 +123,12 @@
 		1510DE9B1DC9469C0039CD8F /* MoviesiOSKata */ = {
 			isa = PBXGroup;
 			children = (
+				3FB0A69E2D8312C100D1EB73 /* Presenter */,
 				155F0C4E1DCA756600CAA83B /* Model */,
 				155F0C4D1DCA755300CAA83B /* View */,
 				155F0C4C1DCA754600CAA83B /* Data */,
 				1510DE9C1DC9469C0039CD8F /* AppDelegate.swift */,
+				3FEDA6612D7B880D003D2AD0 /* AppDependencies.swift */,
 				1510DEA31DC9469C0039CD8F /* Assets.xcassets */,
 				1510DEA81DC9469C0039CD8F /* Info.plist */,
 			);
@@ -147,8 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				155F0C531DCA82EF00CAA83B /* Movies.json */,
-				155F0C551DCA832500CAA83B /* DiskMovieRepository.swift */,
-				3F2C99B72D7F0E24005ED739 /* MovieRepository.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -159,7 +167,8 @@
 				1510DEA01DC9469C0039CD8F /* Main.storyboard */,
 				1537F0041E1B9632005A0270 /* MovieTableViewCell.swift */,
 				1537F0061E1B9697005A0270 /* MoviesViewController.swift */,
-				3FEDA6612D7B880D003D2AD0 /* AppDependencies.swift */,
+				3FB0A6A12D8330C600D1EB73 /* OverviewViewController.swift */,
+				3FB0A6A22D8330C600D1EB73 /* OverviewViewController.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -167,9 +176,28 @@
 		155F0C4E1DCA756600CAA83B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3F1DA3C92D84B53C00437560 /* Repository */,
 				155F0C4F1DCA758700CAA83B /* Movie.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		3F1DA3C92D84B53C00437560 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				155F0C551DCA832500CAA83B /* DiskMovieRepository.swift */,
+				3F2C99B72D7F0E24005ED739 /* MovieRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		3FB0A69E2D8312C100D1EB73 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				3FB0A69F2D83139E00D1EB73 /* MoviePresenter.swift */,
+				3FB0A6A52D83355D00D1EB73 /* OverviewPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		DB15F21642D7101DCED85BD1 /* Frameworks */ = {
@@ -289,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				152BA7301DCD4187000557C2 /* .gitignore in Resources */,
+				3FB0A6A32D8330C600D1EB73 /* OverviewViewController.xib in Resources */,
 				152BA7321DCD46A4000557C2 /* movies.gif in Resources */,
 				155F0C541DCA82EF00CAA83B /* Movies.json in Resources */,
 				1510DEA41DC9469C0039CD8F /* Assets.xcassets in Resources */,
@@ -317,13 +346,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FB0A6A42D8330C600D1EB73 /* OverviewViewController.swift in Sources */,
 				3FEDA6622D7B880D003D2AD0 /* AppDependencies.swift in Sources */,
 				1537F0051E1B9632005A0270 /* MovieTableViewCell.swift in Sources */,
 				1510DE9D1DC9469C0039CD8F /* AppDelegate.swift in Sources */,
 				155F0C501DCA758700CAA83B /* Movie.swift in Sources */,
 				3F2C99B82D7F0E24005ED739 /* MovieRepository.swift in Sources */,
 				155F0C561DCA832500CAA83B /* DiskMovieRepository.swift in Sources */,
+				3FB0A6A62D83355D00D1EB73 /* OverviewPresenter.swift in Sources */,
 				1537F0071E1B9697005A0270 /* MoviesViewController.swift in Sources */,
+				3FB0A6A02D83139E00D1EB73 /* MoviePresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

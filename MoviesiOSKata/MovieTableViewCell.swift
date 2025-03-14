@@ -10,8 +10,8 @@ import UIKit
 
 class MovieTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var movieTitleLabel: UILabel!
-    @IBOutlet weak var movieImageView: UIImageView!
+    @IBOutlet private weak var movieTitleLabel: UILabel!
+    @IBOutlet private weak var movieImageView: UIImageView!
     
     func configure(movie: Movie) {
         movieTitleLabel.text = movie.title
