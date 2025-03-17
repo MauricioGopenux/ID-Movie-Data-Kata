@@ -8,59 +8,51 @@
 
 import UIKit
 
-protocol MoviePresenterProtocol: AnyObject {
-    
-    func loadMovies()
-}
-
 class MoviesViewController: UIViewController {
-
-    @IBOutlet private weak var moviesTableView: UITableView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBAction private func refreshClicked(_ sender: UIButton) {
-        loadMovies()
-    }
-    
     private var moviePresenter: MoviePresenter!
     
+    @IBOutlet private weak var moviesTableView: UITableView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    
+    @IBAction private func refreshClicked(_ sender: UIButton) {
+        reloadMovies()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        moviesTableView.tableFooterView = UIView()
+        moviesTableView.dataSource = self
+        moviePresenter.setUpdateMovies(updateMovies: self)
+        reloadMovies()
+    }
     
     func setMoviePresenter(moviePresenter: MoviePresenter) {
         self.moviePresenter = moviePresenter
     }
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        moviesTableView.tableFooterView = UIView()
-        moviesTableView.dataSource = self
-        moviesTableView.delegate  = self
-        moviePresenter.setConfigMovies(configMovies: self)
-        loadMovies()
+    func reloadMovies() {
+        moviePresenter.reloadMovies()
     }
-    
-    func loadMovies() {
-        moviePresenter.loadMovies()
-    }
-
 }
 
-extension MoviesViewController: ConfMovieViewController {
-    
+extension MoviesViewController: UpdateMovieViewController {
     func updateTable() {
         moviesTableView.reloadData()
-        
     }
     
-    func updateCount(texto: String) {
-        titleLabel.text = texto
+    func loadingCount() {
+        titleLabel.text = "loading ..."
+    }
+    
+    func loadCount() {
+        titleLabel.text = ("Movies: \(moviePresenter.movies.count)")
     }
 }
 
 extension MoviesViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return moviePresenter.movies.count
+        moviePresenter.movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,15 +63,6 @@ extension MoviesViewController: UITableViewDataSource {
         
         return cell
     }
-}
-
-extension MoviesViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        moviePresenter.showOverview(movieId: indexPath.row, referenceVC: self)
-          
-      }
 }
 
 

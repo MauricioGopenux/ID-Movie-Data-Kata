@@ -9,63 +9,52 @@
 import Foundation
 import UIKit
 
-protocol ConfMovieViewController: AnyObject {
+protocol UpdateMovieViewController: AnyObject {
     func updateTable()
-    func updateCount(texto: String)
+    func loadingCount()
+    func loadCount()
 }
 
 final class MoviePresenter {
-    
-    private var movieRepo: MovieRepository
-    private weak var configMovies: ConfMovieViewController?
+    private var movieRepo: MovieRepository!
+    private weak var updateMovies: UpdateMovieViewController?
     var movies: [Movie] = []
     
-    
-    init(movieRepo: MovieRepository) {
+    func setMovieRepository(movieRepo: MovieRepository) {
         self.movieRepo = movieRepo
     }
     
-    func getMovies() {
+    func loadMovies() {
         movies = movieRepo.getMovies()
     }
     
-    func setConfigMovies(configMovies: ConfMovieViewController) {
-        self.configMovies = configMovies
+    func setUpdateMovies(updateMovies: UpdateMovieViewController) {
+        self.updateMovies = updateMovies
     }
  
-    
     func removeMovies() {
         movies.removeAll()
     }
     
-    func showOverview(movieId: Int, referenceVC: UIViewController) {
-        guard let idMovie = movies[movieId].id else { return }
-        let overviewPresenter = OverviewPresenter(movieRepo: movieRepo, movieId: idMovie)
-        let overviewVC = OverviewViewController(overviewPresenter: overviewPresenter)
-        referenceVC.navigationController?.pushViewController(overviewVC, animated: true)
-    }
-    
-    func loadMovies() {
+    func reloadMovies() {
         removeMovies()
         loadinMovies()
         showListMovies()
     }
     
     func loadinMovies() {
-        configMovies?.updateTable()
-        configMovies?.updateCount(texto: "loading ...")
+        updateMovies?.updateTable()
+        updateMovies?.loadingCount()
     }
     
     func showListMovies() {
         DispatchQueue.global(qos: .background).async {
-            self.getMovies()
+            self.loadMovies()
             
             DispatchQueue.main.async {
-                self.configMovies?.updateTable()
-                self.configMovies?.updateCount(texto: "Movies: \(self.movies.count)")
+                self.updateMovies?.updateTable()
+                self.updateMovies?.loadCount()
             }
         }
     }
-    
-    
 }
