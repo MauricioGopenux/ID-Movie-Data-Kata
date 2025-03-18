@@ -9,42 +9,41 @@
 import Foundation
 import UIKit
 
-protocol UpdateMovieViewController: AnyObject {
-    func updateTable()
-    func loadingCount()
-    func loadCount()
+protocol LoadListMoviesViewController: AnyObject {
+    func loadingMovies()
+    func uploadedMovies()
 }
 
 final class MoviePresenter {
-    private var movieRepo: MovieRepository!
-    private weak var updateMovies: UpdateMovieViewController?
+    private var movieInteractor: GetMoviesInteractor!
+    private weak var loadListMovies: LoadListMoviesViewController?
+    private var movieRouting: MoviesRouting?
     var movies: [Movie] = []
     
-    func setMovieRepository(movieRepo: MovieRepository) {
-        self.movieRepo = movieRepo
+    func setMovieInteractor(movieInteractor: GetMoviesInteractor) {
+        self.movieInteractor = movieInteractor
     }
     
     func loadMovies() {
-        movies = movieRepo.getMovies()
+        movies = movieInteractor.loadMovies()
     }
     
-    func setUpdateMovies(updateMovies: UpdateMovieViewController) {
-        self.updateMovies = updateMovies
+    func setLoadListMovies(loadListMovies: LoadListMoviesViewController) {
+        self.loadListMovies = loadListMovies
     }
- 
-    func removeMovies() {
-        movies.removeAll()
+    
+    func setMovieRouter(movieRouting: MoviesRouting) {
+        self.movieRouting = movieRouting
     }
     
     func reloadMovies() {
         removeMovies()
-        loadinMovies()
+        loadListMovies?.loadingMovies()
         showListMovies()
     }
-    
-    func loadinMovies() {
-        updateMovies?.updateTable()
-        updateMovies?.loadingCount()
+ 
+    func removeMovies() {
+        movies.removeAll()
     }
     
     func showListMovies() {
@@ -52,9 +51,13 @@ final class MoviePresenter {
             self.loadMovies()
             
             DispatchQueue.main.async {
-                self.updateMovies?.updateTable()
-                self.updateMovies?.loadCount()
+                self.loadListMovies?.uploadedMovies()
             }
         }
+    }
+    
+    func showMovieDetail(indexPath: Int) {
+        let movieId = movies[indexPath].id
+        movieRouting?.showDetailMovie(movieId: movieId)
     }
 }

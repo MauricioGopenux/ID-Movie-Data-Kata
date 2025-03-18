@@ -9,6 +9,8 @@
 import Foundation
 
 struct Movie {
+    var id: Int
     var image: String?
     var title: String?
+    var overview: String?
 }

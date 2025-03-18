@@ -23,7 +23,7 @@ class MoviesViewController: UIViewController {
         
         moviesTableView.tableFooterView = UIView()
         moviesTableView.dataSource = self
-        moviePresenter.setUpdateMovies(updateMovies: self)
+        moviesTableView.delegate = self
         reloadMovies()
     }
     
@@ -34,35 +34,46 @@ class MoviesViewController: UIViewController {
     func reloadMovies() {
         moviePresenter.reloadMovies()
     }
-}
-
-extension MoviesViewController: UpdateMovieViewController {
+    
+    func updatecount(text: String) {
+        titleLabel.text = text
+    }
+    
     func updateTable() {
         moviesTableView.reloadData()
     }
-    
-    func loadingCount() {
-        titleLabel.text = "loading ..."
+}
+
+extension MoviesViewController: LoadListMoviesViewController {
+    func loadingMovies() {
+        updateTable()
+        updatecount(text: "loading ...")
     }
     
-    func loadCount() {
-        titleLabel.text = ("Movies: \(moviePresenter.movies.count)")
+    func uploadedMovies() {
+        updateTable()
+        updatecount(text: "Movies: \(moviePresenter.movies.count)")
     }
 }
 
-extension MoviesViewController: UITableViewDataSource {
+extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         moviePresenter.movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = moviesTableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)as! MovieTableViewCell
+        let cell = moviesTableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieTableViewCell
         
         let movie: Movie = moviePresenter.movies[indexPath.item]
         cell.configure(movie: movie)
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        moviePresenter.showMovieDetail(indexPath: indexPath.row)
+    }
+    
 }
 
 
