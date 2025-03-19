@@ -5,23 +5,16 @@
 //  Created by Radmas on 13/03/25.
 //  Copyright © 2025 xurxodev. All rights reserved.
 //
-import Foundation
-
 protocol DetailMovieVC: AnyObject {
     func showDetailMovie(movie: Movie)
 }
 
 final class DetailMoviePresenter {
-    private var detailMovieInteractor: GetMovieDetailInteractor!
     private var detailMovieVC: DetailMovieVC!
-    private var movieId: Int?
+    private var movie: Movie?
     
-    func setMovieId(movieId: Int) {
-        self.movieId = movieId
-    }
-    
-    func setMDetailMovieInteractor(detailMovieInteractor: GetMovieDetailInteractor) {
-        self.detailMovieInteractor = detailMovieInteractor
+    func setMovie(movie: Movie) {
+        self.movie = movie
     }
     
     func setDetailMovieVC(detailMovieVC: DetailMovieVC) {
@@ -29,7 +22,7 @@ final class DetailMoviePresenter {
     }
     
     func showMovie() {
-        guard let movieId: Int = movieId , let movie: Movie = detailMovieInteractor.getMovie(movieId: movieId) else { return }
+        guard let movie: Movie = movie else { return }
         detailMovieVC.showDetailMovie(movie: movie)
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DetailMovieRouting: AnyObject {
-    func showDetailMovie(referenceVC: UIViewController, movieId: Int)
+    func showDetailMovie(referenceVC: UIViewController, movie: Movie)
 }
 
 class DetailMovieRouter: DetailMovieRouting {
@@ -19,8 +19,8 @@ class DetailMovieRouter: DetailMovieRouting {
         self.appDependencies = appDependencies
     }
     
-    func showDetailMovie(referenceVC: UIViewController, movieId: Int) {
-        let detailVC =  appDependencies.showMovieDetailVC(movieId: movieId)
+    func showDetailMovie(referenceVC: UIViewController, movie: Movie) {
+        let detailVC =  appDependencies.showMovieDetailVC(movie: movie)
         referenceVC.navigationController?.pushViewController(detailVC, animated: true)
     }
 }

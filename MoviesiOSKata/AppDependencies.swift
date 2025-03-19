@@ -14,7 +14,6 @@ class AppDependencies {
     private let movieInteractor: MovieInteractor = MovieInteractor()
     private let movieRouter: MoviesRouter = MoviesRouter()
     
-    private let detailMovieInteractor: DetailMovieInteractor = DetailMovieInteractor()
     private let detailMoviePresenter: DetailMoviePresenter = DetailMoviePresenter()
     private let detailMovieRouter: DetailMovieRouter = DetailMovieRouter()
     private var detailMovieViewController: DetailMovieViewController!
@@ -22,7 +21,6 @@ class AppDependencies {
     func injectDependencies(window: UIWindow) {
         if let navigationController = window.rootViewController as? UINavigationController{
             if let moviesViewController = navigationController.visibleViewController as?  MoviesViewController {
-                injectRepositoryToInteractor()
                 injectMovieDependencies(moviesViewController: moviesViewController)
                 injectAppDependenciesToDetailRouter()
             }
@@ -35,7 +33,6 @@ class AppDependencies {
     
     private func injectRepositoryToInteractor() {
         movieInteractor.setMovieRepository(movieRepository: movieRepository)
-        detailMovieInteractor.setMovieRepository(movieRepository: movieRepository)
     }
     
     private func injectAppDependenciesToDetailRouter() {
@@ -43,6 +40,8 @@ class AppDependencies {
     }
     
     private func injectMovieDependencies(moviesViewController: MoviesViewController) {
+        injectMoviePresenterToMovieInteractor()
+        injectRepositoryToInteractor()
         injectMovieInteractorToMoviePresenter()
         injectMovieVCToMovieRouter(moviesViewController: moviesViewController)
         injectDetailRouterToMovieRouter()
@@ -51,7 +50,9 @@ class AppDependencies {
         injectMoviePresenterToMovieVC(moviesViewController: moviesViewController)
     }
     
-   
+    private func injectMoviePresenterToMovieInteractor() {
+        movieInteractor.setMoviePresenter(moviePresenter: moviePresenter)
+    }
     
     private func injectMovieInteractorToMoviePresenter() {
         moviePresenter.setMovieInteractor(movieInteractor: movieInteractor)
@@ -73,9 +74,9 @@ class AppDependencies {
         moviePresenter.setLoadListMovies(loadListMovies: moviesViewController)
     }
     
-    func showMovieDetailVC(movieId: Int) -> UIViewController{
+    func showMovieDetailVC(movie: Movie) -> UIViewController{
         injectDetailMovieVC()
-        injectMovieIdInPresenter(movieId: movieId)
+        injectMovieInPresenter(movie: movie)
         injectDetailMovieDependencies()
         
         return detailMovieViewController
@@ -85,18 +86,13 @@ class AppDependencies {
         detailMovieViewController = DetailMovieViewController()
     }
     
-    private func injectMovieIdInPresenter(movieId: Int) {
-        detailMoviePresenter.setMovieId(movieId: movieId)
+    private func injectMovieInPresenter(movie: Movie) {
+        detailMoviePresenter.setMovie(movie: movie)
     }
     
     private func injectDetailMovieDependencies() {
-        injectDetailInteractorToDetailPresenter()
         injectDetailPresenterToDetailViewController(detailMovieViewController: detailMovieViewController)
         injectDetailViewControllerToDetailPresenter(detailMovieViewController: detailMovieViewController)
-    }
-    
-    private func injectDetailInteractorToDetailPresenter() {
-        detailMoviePresenter.setMDetailMovieInteractor(detailMovieInteractor: detailMovieInteractor)
     }
     
     private func injectDetailPresenterToDetailViewController(detailMovieViewController: DetailMovieViewController) {

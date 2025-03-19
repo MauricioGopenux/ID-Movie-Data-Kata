@@ -8,5 +8,5 @@
 
 protocol MovieRepository {
     func getMovies() -> [Movie]
-    func getMovieById(movieId: Int) -> Movie?
+   // func getMovieById(movieId: Int) -> Movie?
 }

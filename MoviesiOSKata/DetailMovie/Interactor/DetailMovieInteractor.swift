@@ -1,22 +1,22 @@
 //
-//  Mvoies.swift
+//  DetailMovieInteractor.swift
 //  MoviesiOSKata
 //
 //  Created by Radmas on 18/03/25.
 //  Copyright © 2025 xurxodev. All rights reserved.
 //
-protocol GetMoviesInteractor: AnyObject {
-    func loadMovies() -> [Movie]
+protocol GetMovieDetailInteractor: AnyObject {
+    func getMovie(movieId : Int) -> Movie?
 }
 
-class MovieInteractor: GetMoviesInteractor {
+class DetailMovieInteractor: GetMovieDetailInteractor {
     private var movieRepository: MovieRepository!
     
     func setMovieRepository(movieRepository: MovieRepository) {
         self.movieRepository = movieRepository
     }
     
-    func loadMovies() -> [Movie] {
-        movieRepository.getMovies()
+    func getMovie(movieId : Int) -> Movie?{
+        movieRepository.getMovies().first(where: {$0.id == movieId})
     }
 }

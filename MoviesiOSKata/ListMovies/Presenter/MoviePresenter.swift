@@ -5,8 +5,6 @@
 //  Created by Radmas on 13/03/25.
 //  Copyright © 2025 xurxodev. All rights reserved.
 //
-import Foundation
-
 protocol LoadListMoviesViewController: AnyObject {
     func loadingMovies()
     func uploadedMovies()
@@ -22,10 +20,6 @@ final class MoviePresenter {
         self.movieInteractor = movieInteractor
     }
     
-    func loadMovies() {
-        movies = movieInteractor.loadMovies()
-    }
-    
     func setLoadListMovies(loadListMovies: LoadListMoviesViewController) {
         self.loadListMovies = loadListMovies
     }
@@ -37,25 +31,22 @@ final class MoviePresenter {
     func reloadMovies() {
         removeMovies()
         loadListMovies?.loadingMovies()
-        showListMovies()
+        movieInteractor.loadMovies()
     }
  
     func removeMovies() {
         movies.removeAll()
     }
     
-    func showListMovies() {
-        DispatchQueue.global(qos: .background).async {
-            self.loadMovies()
-            
-            DispatchQueue.main.async {
-                self.loadListMovies?.uploadedMovies()
-            }
-        }
-    }
-    
     func showMovieDetail(indexPath: Int) {
-        let movieId = movies[indexPath].id
-        movieRouting?.showDetailMovie(movieId: movieId)
+        let movie: Movie = movies[indexPath]
+        movieRouting?.showDetailMovie(movie: movie)
+    }
+}
+
+extension MoviePresenter: ShowMoviesPresenter {
+    func showListMovies(movies: [Movie]) {
+        self.movies = movies
+        self.loadListMovies?.uploadedMovies()
     }
 }

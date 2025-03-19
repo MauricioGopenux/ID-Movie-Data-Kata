@@ -6,7 +6,7 @@
 //  Copyright © 2025 xurxodev. All rights reserved.
 //
 protocol MoviesRouting: AnyObject {
-    func showDetailMovie(movieId: Int)
+    func showDetailMovie(movie: Movie)
 }
 
 class MoviesRouter: MoviesRouting {
@@ -21,9 +21,9 @@ class MoviesRouter: MoviesRouting {
         self.detailMovieRouting = detailMovieRouting
     }
     
-    func showDetailMovie(movieId: Int) {
-        guard let vc = moviesViewController else { return }
-        detailMovieRouting?.showDetailMovie(referenceVC: vc, movieId: movieId)
+    func showDetailMovie(movie: Movie) {
+        guard let moviesVC = moviesViewController else { return }
+        detailMovieRouting?.showDetailMovie(referenceVC: moviesVC, movie: movie)
     }
 }
 
