@@ -30,7 +30,7 @@ final class DetailMoviePresenter {
     }
     
     func showMovie() {
-        guard let movieId: Int = movieId , let movie = detailMovieInteractor.getMovie(movieId: movieId) else { return }
+        guard let movieId: Int = movieId , let movie: Movie = detailMovieInteractor.getMovie(movieId: movieId) else { return }
         detailMovieVC.showDetailMovie(movie: movie)
     }
 }
