@@ -5,12 +5,11 @@
 //  Created by Radmas on 7/03/25.
 //  Copyright © 2025 xurxodev. All rights reserved.
 //
-
 import Foundation
 import UIKit
 
 class AppDependencies {
-    private let movieRepository: DiskMovieRepository = DiskMovieRepository()
+    private let movieRepository: MovieRepository = DiskMovieRepository()
     private let moviePresenter: MoviePresenter = MoviePresenter()
     private let movieInteractor: MovieInteractor = MovieInteractor()
     private let movieRouter: MoviesRouter = MoviesRouter()
@@ -18,13 +17,14 @@ class AppDependencies {
     private let detailMovieInteractor: DetailMovieInteractor = DetailMovieInteractor()
     private let detailMoviePresenter: DetailMoviePresenter = DetailMoviePresenter()
     private let detailMovieRouter: DetailMovieRouter = DetailMovieRouter()
+    private var detailMovieViewController: DetailMovieViewController!
     
     func injectDependencies(window: UIWindow) {
         if let navigationController = window.rootViewController as? UINavigationController{
             if let moviesViewController = navigationController.visibleViewController as?  MoviesViewController {
                 injectRepositoryToInteractor()
                 injectMovieDependencies(moviesViewController: moviesViewController)
-                injectDetailMovieDependencies()
+                injectAppDependenciesToDetailRouter()
             }
         }
     }
@@ -38,6 +38,10 @@ class AppDependencies {
         detailMovieInteractor.setMovieRepository(movieRepository: movieRepository)
     }
     
+    private func injectAppDependenciesToDetailRouter() {
+        detailMovieRouter.setAppDependencies(appDependencies: self)
+    }
+    
     private func injectMovieDependencies(moviesViewController: MoviesViewController) {
         injectMovieInteractorToMoviePresenter()
         injectMovieVCToMovieRouter(moviesViewController: moviesViewController)
@@ -47,10 +51,7 @@ class AppDependencies {
         injectMoviePresenterToMovieVC(moviesViewController: moviesViewController)
     }
     
-    private func injectDetailMovieDependencies() {
-        injectAppDependenciesToDetailRouter()
-        injectDetailInteractorToDetailPresenter()
-    }
+   
     
     private func injectMovieInteractorToMoviePresenter() {
         moviePresenter.setMovieInteractor(movieInteractor: movieInteractor)
@@ -72,25 +73,30 @@ class AppDependencies {
         moviePresenter.setLoadListMovies(loadListMovies: moviesViewController)
     }
     
-    private func injectAppDependenciesToDetailRouter() {
-        detailMovieRouter.setAppDependencies(appDependencies: self)
-    }
-    
-    private func injectDetailInteractorToDetailPresenter() {
-        detailMoviePresenter.setMDetailMovieInteractor(detailMovieInteractor: detailMovieInteractor)
-    }
-    
     func showMovieDetailVC(movieId: Int) -> UIViewController{
-        let detailMovieViewController: DetailMovieViewController = DetailMovieViewController()
+        injectDetailMovieVC()
         injectMovieIdInPresenter(movieId: movieId)
-        injectDetailPresenterToDetailViewController(detailMovieViewController: detailMovieViewController)
-        injectDetailViewControllerToDetailPresenter(detailMovieViewController: detailMovieViewController)
+        injectDetailMovieDependencies()
         
         return detailMovieViewController
     }
     
+    private func injectDetailMovieVC() {
+        detailMovieViewController = DetailMovieViewController()
+    }
+    
     private func injectMovieIdInPresenter(movieId: Int) {
         detailMoviePresenter.setMovieId(movieId: movieId)
+    }
+    
+    private func injectDetailMovieDependencies() {
+        injectDetailInteractorToDetailPresenter()
+        injectDetailPresenterToDetailViewController(detailMovieViewController: detailMovieViewController)
+        injectDetailViewControllerToDetailPresenter(detailMovieViewController: detailMovieViewController)
+    }
+    
+    private func injectDetailInteractorToDetailPresenter() {
+        detailMoviePresenter.setMDetailMovieInteractor(detailMovieInteractor: detailMovieInteractor)
     }
     
     private func injectDetailPresenterToDetailViewController(detailMovieViewController: DetailMovieViewController) {

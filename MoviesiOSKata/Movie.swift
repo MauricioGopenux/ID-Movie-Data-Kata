@@ -6,8 +6,6 @@
 //  Copyright © 2016 xurxodev. All rights reserved.
 //
 
-import Foundation
-
 struct Movie {
     var id: Int
     var image: String?

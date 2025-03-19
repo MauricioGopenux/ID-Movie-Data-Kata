@@ -5,9 +5,7 @@
 //  Created by Radmas on 13/03/25.
 //  Copyright © 2025 xurxodev. All rights reserved.
 //
-
 import Foundation
-import UIKit
 
 protocol LoadListMoviesViewController: AnyObject {
     func loadingMovies()

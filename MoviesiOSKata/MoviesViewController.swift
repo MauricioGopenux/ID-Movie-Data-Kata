@@ -5,7 +5,6 @@
 //  Created by Jorge Sánchez on 3/1/17.
 //  Copyright © 2017 xurxodev. All rights reserved.
 //
-
 import UIKit
 
 class MoviesViewController: UIViewController {
@@ -56,7 +55,7 @@ extension MoviesViewController: LoadListMoviesViewController {
     }
 }
 
-extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
+extension MoviesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         moviePresenter.movies.count
     }
@@ -69,12 +68,10 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
-    
+}
+
+extension MoviesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         moviePresenter.showMovieDetail(indexPath: indexPath.row)
     }
-    
 }
-
-
-

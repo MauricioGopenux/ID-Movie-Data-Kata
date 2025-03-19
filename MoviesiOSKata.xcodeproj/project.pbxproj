@@ -131,11 +131,12 @@
 		1510DE9B1DC9469C0039CD8F /* MoviesiOSKata */ = {
 			isa = PBXGroup;
 			children = (
-				3FE57B3B2D89DC5A003B9A55 /* Router */,
-				3F87BE4D2D89CFD1004A7A3D /* Interactor */,
-				3FB0A69E2D8312C100D1EB73 /* Presenter */,
-				155F0C4E1DCA756600CAA83B /* Entities */,
 				155F0C4D1DCA755300CAA83B /* View */,
+				3FE57B3B2D89DC5A003B9A55 /* Router */,
+				3FB0A69E2D8312C100D1EB73 /* Presenter */,
+				3F87BE4D2D89CFD1004A7A3D /* Interactor */,
+				155F0C4E1DCA756600CAA83B /* Entities */,
+				155F0C4C1DCA754600CAA83B /* Data */,
 				3F1DA3C92D84B53C00437560 /* Repository */,
 				3FEDA6612D7B880D003D2AD0 /* AppDependencies.swift */,
 				1510DE9C1DC9469C0039CD8F /* AppDelegate.swift */,
@@ -186,7 +187,6 @@
 		155F0C4E1DCA756600CAA83B /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				155F0C4C1DCA754600CAA83B /* Data */,
 				155F0C4F1DCA758700CAA83B /* Movie.swift */,
 			);
 			name = Entities;
