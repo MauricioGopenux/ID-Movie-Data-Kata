@@ -10,28 +10,28 @@ protocol LoadListMoviesViewController: AnyObject {
     func uploadedMovies()
 }
 
-final class MoviePresenter {
-    private var movieInteractor: GetMoviesInteractor!
+final class MoviesPresenter {
+    private var moviesInteractor: MoviesInteractor!
     private weak var loadListMovies: LoadListMoviesViewController?
-    private var movieRouting: MoviesRouting?
+    private var moviesRouting: MoviesRouting?
     var movies: [Movie] = []
     
-    func setMovieInteractor(movieInteractor: GetMoviesInteractor) {
-        self.movieInteractor = movieInteractor
+    func setMoviesInteractor(moviesInteractor: MoviesInteractor) {
+        self.moviesInteractor = moviesInteractor
     }
     
     func setLoadListMovies(loadListMovies: LoadListMoviesViewController) {
         self.loadListMovies = loadListMovies
     }
     
-    func setMovieRouter(movieRouting: MoviesRouting) {
-        self.movieRouting = movieRouting
+    func setMoviesRouter(moviesRouting: MoviesRouting) {
+        self.moviesRouting = moviesRouting
     }
     
     func reloadMovies() {
         removeMovies()
         loadListMovies?.loadingMovies()
-        movieInteractor.loadMovies()
+        moviesInteractor.loadMovies()
     }
  
     func removeMovies() {
@@ -40,11 +40,11 @@ final class MoviePresenter {
     
     func showMovieDetail(indexPath: Int) {
         let movie: Movie = movies[indexPath]
-        movieRouting?.showDetailMovie(movie: movie)
+        moviesRouting?.showDetailMovie(movie: movie)
     }
 }
 
-extension MoviePresenter: ShowMoviesPresenter {
+extension MoviesPresenter: ShowMoviesPresenter {
     func showListMovies(movies: [Movie]) {
         self.movies = movies
         self.loadListMovies?.uploadedMovies()

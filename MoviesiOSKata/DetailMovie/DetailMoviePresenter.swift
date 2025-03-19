@@ -10,7 +10,7 @@ protocol DetailMovieVC: AnyObject {
 }
 
 final class DetailMoviePresenter {
-    private var detailMovieVC: DetailMovieVC!
+    private var detailMovieVC: DetailMovieVC?
     private var movie: Movie?
     
     func setMovie(movie: Movie) {
@@ -23,6 +23,6 @@ final class DetailMoviePresenter {
     
     func showMovie() {
         guard let movie: Movie = movie else { return }
-        detailMovieVC.showDetailMovie(movie: movie)
+        detailMovieVC?.showDetailMovie(movie: movie)
     }
 }

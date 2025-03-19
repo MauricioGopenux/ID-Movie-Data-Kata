@@ -6,7 +6,6 @@
 //  Copyright © 2025 xurxodev. All rights reserved.
 //
 
-protocol MovieRepository {
+protocol MoviesRepository {
     func getMovies() -> [Movie]
-   // func getMovieById(movieId: Int) -> Movie?
 }

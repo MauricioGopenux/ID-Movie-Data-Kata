@@ -16,6 +16,7 @@ class DetailMovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        detailMoviePresenter.setDetailMovieVC(detailMovieVC: self)
         detailMoviePresenter.showMovie()
         // Do any additional setup after loading the view.
     }

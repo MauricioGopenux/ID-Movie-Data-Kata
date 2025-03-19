@@ -8,9 +8,7 @@
 
 import Foundation
 
-class DiskMovieRepository: MovieRepository {
-    
-    
+class DiskMovieRepository: MoviesRepository {
     func getMovies() -> [Movie] {
         var movies:[Movie] = []
         
@@ -38,10 +36,6 @@ class DiskMovieRepository: MovieRepository {
         
         return movies;
     }
-    
-  //  func getMovieById(movieId: Int) -> Movie? {
-    //    movies.first(where: {$0.id == movieId})
-    //}
     
     private func simulateDelay() -> Void{
         sleep(2)

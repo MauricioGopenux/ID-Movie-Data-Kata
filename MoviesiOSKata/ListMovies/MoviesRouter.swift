@@ -10,20 +10,19 @@ protocol MoviesRouting: AnyObject {
 }
 
 class MoviesRouter: MoviesRouting {
-    private weak var moviesViewController: MoviesViewController?
-    private var detailMovieRouting: DetailMovieRouting?
+    private weak var moviesViewController: MoviesViewController!
+    private var detailMovieRouter: DetailMovieRouter!
     
     func setMoviesViewController(moviesViewController: MoviesViewController) {
         self.moviesViewController = moviesViewController
     }
     
-    func setDetailMovieRouting(detailMovieRouting: DetailMovieRouting) {
-        self.detailMovieRouting = detailMovieRouting
+    func setDetailMovieRouter(detailMovieRouter: DetailMovieRouter) {
+        self.detailMovieRouter = detailMovieRouter
     }
     
     func showDetailMovie(movie: Movie) {
-        guard let moviesVC = moviesViewController else { return }
-        detailMovieRouting?.showDetailMovie(referenceVC: moviesVC, movie: movie)
+        detailMovieRouter.showDetailMovie(referenceVC: moviesViewController, movie: movie)
     }
 }
 

@@ -8,7 +8,7 @@
 import UIKit
 
 class MoviesViewController: UIViewController {
-    private var moviePresenter: MoviePresenter!
+    private var moviesPresenter: MoviesPresenter!
     
     @IBOutlet private weak var moviesTableView: UITableView!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -21,20 +21,21 @@ class MoviesViewController: UIViewController {
         super.viewDidLoad()
         
         moviesTableView.tableFooterView = UIView()
+        moviesPresenter.setLoadListMovies(loadListMovies: self)
         moviesTableView.dataSource = self
         moviesTableView.delegate = self
         reloadMovies()
     }
     
-    func setMoviePresenter(moviePresenter: MoviePresenter) {
-        self.moviePresenter = moviePresenter
+    func setMoviesPresenter(moviesPresenter: MoviesPresenter) {
+        self.moviesPresenter = moviesPresenter
     }
     
     func reloadMovies() {
-        moviePresenter.reloadMovies()
+        moviesPresenter.reloadMovies()
     }
     
-    func updatecount(text: String) {
+    func changeText(text: String) {
         titleLabel.text = text
     }
     
@@ -46,24 +47,24 @@ class MoviesViewController: UIViewController {
 extension MoviesViewController: LoadListMoviesViewController {
     func loadingMovies() {
         updateTable()
-        updatecount(text: "loading ...")
+        changeText(text: "loading ...")
     }
     
     func uploadedMovies() {
         updateTable()
-        updatecount(text: "Movies: \(moviePresenter.movies.count)")
+        changeText(text: "Movies: \(moviesPresenter.movies.count)")
     }
 }
 
 extension MoviesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        moviePresenter.movies.count
+        moviesPresenter.movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = moviesTableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieTableViewCell
         
-        let movie: Movie = moviePresenter.movies[indexPath.item]
+        let movie: Movie = moviesPresenter.movies[indexPath.item]
         cell.configure(movie: movie)
         
         return cell
@@ -72,6 +73,6 @@ extension MoviesViewController: UITableViewDataSource {
 
 extension MoviesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        moviePresenter.showMovieDetail(indexPath: indexPath.row)
+        moviesPresenter.showMovieDetail(indexPath: indexPath.row)
     }
 }

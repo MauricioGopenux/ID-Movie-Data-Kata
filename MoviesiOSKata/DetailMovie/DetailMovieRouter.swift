@@ -7,11 +7,7 @@
 //
 import UIKit
 
-protocol DetailMovieRouting: AnyObject {
-    func showDetailMovie(referenceVC: UIViewController, movie: Movie)
-}
-
-class DetailMovieRouter: DetailMovieRouting {
+class DetailMovieRouter {
     
     private weak var appDependencies: AppDependencies!
     
