@@ -16,7 +16,7 @@ class DetailMovieRouter {
     }
     
     func showDetailMovie(referenceVC: UIViewController, movie: Movie) {
-        let detailVC =  appDependencies.showMovieDetailVC(movie: movie)
+        let detailVC =  appDependencies.configMovieDetailVC(movie: movie)
         referenceVC.navigationController?.pushViewController(detailVC, animated: true)
     }
 }

@@ -69,7 +69,7 @@ class AppDependencies {
         moviesPresenter.setMoviesRouter(moviesRouting: moviesRouter)
     }
     
-    func showMovieDetailVC(movie: Movie) -> UIViewController{
+    func configMovieDetailVC(movie: Movie) -> UIViewController{
         injectDetailMovieVC()
         injectMovieInPresenter(movie: movie)
         injectDetailMovieDependencies()
